@@ -22,39 +22,38 @@ namespace PaiASP2
             int maxThreads = int.Parse(Session["maxThreads"].ToString());
 
             Label1.Text = Integral(start, end, limit, maxThreads).ToString();
+            // Label1.Text = "maxThreads: " + maxThreads.ToString();
         }
 
         private double Integral(double start, double end, int limit, int maxThreads)
         {
-            double[] result = new double[maxThreads];
-            double interval = Math.Abs(end - start) / maxThreads;
+            int[] result = new int[maxThreads];
+            double interval = (end - start) / maxThreads;
 
             Parallel.For(0, maxThreads, (threadId) =>
             {
-                for (double x = threadId * interval; x < (threadId + 1) * interval; x += interval)
+                double randomX, randomY, sin;
+                double x1 = start + threadId * interval;
+                double x2 = x1 + interval;
+                int hitCounter = 0;
+
+                for (int i = 0; i < limit; i++)
                 {
-                    int hitCounter = 0;
-                    for (int i = 0; i < limit; i++)
+                    randomX = GetRandomDouble(x1, x2);
+                    randomY = GetRandomDouble(0.0, 1.0);
+                    sin = Math.Sin(randomX);
+
+                    if (sin > 0.0)
                     {
-                        double randomX = GetRandomDouble(x, x + interval);
-                        double randomY = GetRandomDouble(-1.0, 1.0);
-                        double sin = Math.Sin(randomX);
-                        //sprawdzamy czy liczba jest pod wykresem (trafiła w przedział)
-                        if (sin < 0)
-                        {
-                            if (randomY >= sin && randomY <= 0) hitCounter++;
-                        }
-                        else
-                        {
-                            if (randomY <= sin && randomY >= 0) hitCounter++;
-                        }
+                        if (randomY <= sin)
+                            hitCounter++;
                     }
-                    //zapisujemy wynik dla danego wątku
-                    result[threadId] = hitCounter;
                 }
+
+                result[threadId] = hitCounter;
             });
-            //zwracamy obliczoną całkę
-            return result.Sum()/(limit*maxThreads);
+
+            return 1.0 * (end-start) * result.Sum() / (limit*maxThreads);
         }
         
         private double GetRandomDouble(double minimum, double maximum)
