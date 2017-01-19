@@ -14,7 +14,7 @@ namespace PaiASP2
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Label1.Text = Session["start"].ToString() + " " + Session["end"].ToString() + " " + Session["limit"].ToString() + " " + Session["maxThreads"].ToString();
+            // Label1.Text = Session["start"].ToString() + " " + Session["end"].ToString() + " " + Session["limit"].ToString() + " " + Session["maxThreads"].ToString();
 
             double start = Double.Parse(Session["start"].ToString());
             double end = Double.Parse(Session["end"].ToString());
@@ -22,7 +22,8 @@ namespace PaiASP2
             int maxThreads = int.Parse(Session["maxThreads"].ToString());
 
             Label1.Text = Integral(start, end, limit, maxThreads).ToString();
-            // Label1.Text = "maxThreads: " + maxThreads.ToString();
+
+            Session.RemoveAll();
         }
 
         private double Integral(double start, double end, int limit, int maxThreads)
