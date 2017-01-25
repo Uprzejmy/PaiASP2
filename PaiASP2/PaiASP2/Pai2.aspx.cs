@@ -9,11 +9,6 @@ namespace PaiASP2
 {
     public partial class Pai2 : System.Web.UI.Page
     {
-        double start = 0.0;
-        double end = 0.0;
-        int limit;
-        int maxThreads = 1; //Liczba watkow
-
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -21,6 +16,10 @@ namespace PaiASP2
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            double start = 0.0;
+            double end = 0.0;
+            int limit = 1000;
+
             Label1.Text = "";
             try
             {
@@ -35,16 +34,7 @@ namespace PaiASP2
 
             try
             {
-                maxThreads = int.Parse(TextBox3.Text);
-            }
-            catch (Exception)
-            {
-                Label1.Text = "Zły format danych int (0)";
-            }
-
-            try
-            {
-                limit = int.Parse(TextBox4.Text);
+                limit = int.Parse(TextBox3.Text);
             }
             catch (Exception)
             {
@@ -54,7 +44,6 @@ namespace PaiASP2
             Session["start"] = start;
             Session["end"] = end;
             Session["limit"] = limit;
-            Session["maxThreads"] = maxThreads;
             Response.Redirect("Result.aspx");
         }
     }

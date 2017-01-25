@@ -18,17 +18,13 @@
     
         <br />
     
-        <asp:TextBox ID="TextBox3" runat="server">threads count</asp:TextBox>
-    
-        <br />
-    
-        <asp:TextBox ID="TextBox4" runat="server">points per thread</asp:TextBox>
+        <asp:TextBox ID="TextBox3" runat="server">points per thread</asp:TextBox>
     
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Run" />
         <br />
+        <asp:Label ID="Label1" runat="server" Text="Errors:"></asp:Label>
         <br />
-        <asp:Label ID="Label1" runat="server" Text="Result: "></asp:Label>
     
     </div>
     </form>
